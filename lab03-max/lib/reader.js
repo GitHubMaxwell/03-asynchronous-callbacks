@@ -31,7 +31,8 @@ const read = function(file, callback) {
       } else {
         callback(undefined, data.toString().trim());
       }
-    });},500);
+    });
+  },500);
 };
 
 // const read = function(file, callback) {

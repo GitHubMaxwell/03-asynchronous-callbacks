@@ -36,11 +36,12 @@ describe('Reader Module', () => {
 //     });
 //   });
 
-  it('should callback with error for any non-existent file', (done) => {
+  it('should callback with error for any non-existent file', () => {
 
     read([], (err,data) => {
       expect(err).not.toBeNull();
-      done();
+      expect(typeof data).toBe('string');
+    //   done();
     });
   });
 //   it('when given a real file, returns the contents', () => {
