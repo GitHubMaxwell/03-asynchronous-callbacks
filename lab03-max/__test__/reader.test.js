@@ -1,56 +1,55 @@
-const read = require('../lib/reader.js');
+'use strict';
 
-jest.mock('fs');
-// const read = require('../lib/reader');
+let read = require('../lib/reader.js');
 
 describe('Reader Module', () => {
-//   it('when given a bad file, returns an error', () => {
-//     // Note that the actual path here doesn't really matter.
-//     // If we weren't mocking, it would.  The "fs" module would need
-//     // to find the actual file.
-//     //
-//     // Also note that this file is named "bad.txt".  Our mock fs module
-//     // will always return an error if a file has the word "bad" in its name
-//     let file = `${__dirname}/../../data/bad.txt`;
-//     read(file, (err,data) => {
-//       expect(err).toBeDefined();
-//     });
-//   });
 
-//   it('should callback with error for any non-existent file', (done) => {
-//     let file = `${__dirname}../data/appples.txt`;
-//     read(file, (err) => {
-//       expect(err).not.toBeNull();
-//       done();
-//     });
-    
-//   });
 
-//   it('should callback with error for any non-existent file', (done) => {
-
-//     read([__dirname + '../data/apples.txt', 'missing.txt'], (err) => {
-
-//       expect(err).not.toBeNull();
-      
-//       done();
-//     });
-//   });
-
-  it('should callback with error for any non-existent file', () => {
-
-    read([], (err,data) => {
-      expect(err).not.toBeNull();
-      expect(typeof data).toBe('string');
-    //   done();
+  it('should callback with error for a non-existent file', (done) => {
+    read(['missing.txt'], (err) => {
+      expect(err).not.toBeUndefined();
+      done();
     });
   });
-//   it('when given a real file, returns the contents', () => {
-//     let file = `${__dirname}../data/apples.txt`;
-//     read(file, (err,data) => {
-//       expect(err).toBeUndefined();
-//       // We don't need to care what the text is, only that we got back a string
-//       // That's the interface of our reader module: Give a file+cb, get back stringified  contents
-//       expect(typeof data).toBe('string');
-//     });
-//   });
+
+  // it('should callback with file contents of one file', (done) => {
+  
+  //   const expected = 'words about apples'; 
+
+  //   read([`${__dirname}/../data/apples.txt`], (err, data) => {
+
+  //     expect(err).toBeUndefined();
+  //     let actual = data.toString();
+  //     expect(actual).toBe(expected);
+
+  //     done();
+      
+  //   });
+  // });
+
+  it('should callback with file contents of multiple files in order', (done) => {
+  
+    let paths = [];
+    for (let item of ['cucumbers','apples','bananas']) {
+      paths.push(__dirname + '/../data/' + item + '.txt');
+    }
+    let expected, actual;
+    read(paths, (err, contents) => {
+      expect(err).not.toBeUndefined();
+      expected = true;
+      actual = contents[0].toString().startsWith('cucumber');
+      expect(actual).toBe(expected);
+
+      expected = 'words about apples'; 
+      actual = contents[1].toString();
+      expect(actual).toBe(expected);
+
+      expected = 'words about bananas'; 
+      actual = contents[2].toString();
+      expect(actual).toBe(expected);
+
+      done();      
+    });
+  });
+
 });
