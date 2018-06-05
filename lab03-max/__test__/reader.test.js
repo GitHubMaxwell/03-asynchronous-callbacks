@@ -3,6 +3,7 @@
 let reader = require('../lib/reader.js');
 
 describe('Reader Module', () => {
+  
   it('should callback with error for a non-existent file', function(done) {
     reader(['missing.txt'], (err) => {
       // expect(err).toMatch(/ENOENT/);

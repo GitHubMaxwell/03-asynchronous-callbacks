@@ -3,6 +3,7 @@
 const fs = require('fs');
 let newArr = [];
 
+
 module.exports = exports = function(arr,callback) {
 
   fs.readFile(arr[0], (err, data) => {
